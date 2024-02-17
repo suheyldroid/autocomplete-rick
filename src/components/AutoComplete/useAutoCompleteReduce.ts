@@ -1,21 +1,7 @@
 import {useReducer} from "react";
 
-function useAutoCompleteReduce(options?: useAutoCompleteReduceOptions) {
-    return useReducer((state: {
-                           inputValue: string,
-                           selectedItems: CharacterType[],
-                           showOptions: boolean
-                       }, action: {
-                           type: "DESELECT" | "INPUT_CHANGE"
-                           value: string
-                       } | {
-                           type: "SELECT"
-                           value: CharacterType
-                       } |
-                           {
-                               type: "SHOW_OPTIONS"
-                               value: boolean
-                           }
+function useAutoCompleteReduce() {
+    return useReducer((state: AutoCompleteReducerState, action: AutoCompleteReducerAction
     ) => {
         switch (action.type) {
             case "SELECT":
@@ -29,7 +15,6 @@ function useAutoCompleteReduce(options?: useAutoCompleteReduceOptions) {
                     selectedItems: state.selectedItems.filter((value) => value.id !== action.value)
                 }
             case "INPUT_CHANGE":
-                if (options?.onInputValueChange) options.onInputValueChange(action.value)
                 return {
                     ...state,
                     inputValue: action.value
@@ -39,18 +24,46 @@ function useAutoCompleteReduce(options?: useAutoCompleteReduceOptions) {
                     ...state,
                     showOptions: action.value
                 }
+            case "SET_ACTIVE_INDEX":
+                return {
+                    ...state,
+                    activeIndex: action.value
+                }
             default:
                 return state
         }
     }, {
         inputValue: "",
         selectedItems: [],
-        showOptions: false
+        showOptions: false,
+        activeIndex: 0
     })
 }
 
-interface useAutoCompleteReduceOptions {
-    onInputValueChange?: (value: string) => void;
+
+type AutoCompleteReducerState = {
+    inputValue: string,
+    selectedItems: CharacterType[],
+    showOptions: boolean
+    activeIndex: number
 }
+
+type AutoCompleteReducerAction =
+    {
+        type: "DESELECT" | "INPUT_CHANGE"
+        value: string
+    } |
+    {
+        type: "SELECT"
+        value: CharacterType
+    } |
+    {
+        type: "SHOW_OPTIONS"
+        value: boolean
+    } |
+    {
+        type: "SET_ACTIVE_INDEX"
+        value: number
+    }
 
 export {useAutoCompleteReduce}

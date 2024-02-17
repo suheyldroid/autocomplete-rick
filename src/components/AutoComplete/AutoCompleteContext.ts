@@ -10,16 +10,21 @@ export interface BaseItem {
 }
 
 interface AutoCompleteStore {
-    options: CharacterType[]
-    inputValue: string
-    selectedItems: CharacterType[]
-    handleInputChange: (value: string) => void
-    handleSelectItem: (id: CharacterType["id"]) => void
-    handleDeselectValue: (id: CharacterType["id"]) => void
-    handleShowOptions: (value: boolean) => void
-
     isLoading: boolean
+    options: CharacterType[]
+
     showOptions: boolean
+    setShowOptions: (value: boolean) => void
+
+    inputValue: string
+    setInputValue: (value: string) => void
+
+    selectedItems: CharacterType[]
+    handleSelectItem: (id: CharacterType["id"]) => void
+    handleDeselectItem: (id: CharacterType["id"]) => void
+
+    activeIndex: number
+    setActiveIndex: (value: number) => void
 }
 
 const AutoCompleteProvider = AutoCompleteContext.Provider

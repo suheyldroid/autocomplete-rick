@@ -2,39 +2,56 @@
 import {HStack, VStack} from "@styles/jsx";
 import Image from "next/image";
 import {Typography} from "@/components/Typography";
-import {css} from "@styles/css";
+import {css, cx} from "@styles/css";
 import {highlightText} from "@/helpers/highlightText";
-import {useAutoCompleteContext} from "@/components/MultiSelect/AutoCompleteContext";
+import {useAutoCompleteContext} from "@/components/AutoComplete/AutoCompleteContext";
+import {useEffect, useRef} from "react";
 
-function AutoCompleteOption({character}: MultiSelectOptionProps) {
-    const {selectedItems, handleSelectItem, handleDeselectValue, inputValue} = useAutoCompleteContext()
+function AutoCompleteOption({character, isSelected = false}: MultiSelectOptionProps) {
+    const {selectedItems, handleSelectItem, handleDeselectItem, inputValue} = useAutoCompleteContext()
     const isCharacterSelected = selectedItems.map(item => item.id).includes(character.id)
+    const wrapperRef = useRef<HTMLDivElement>(null)
 
     function handleToggleCharacter() {
         if (isCharacterSelected) {
-            handleDeselectValue(character.id)
+            handleDeselectItem(character.id)
         } else {
             handleSelectItem(character.id)
         }
     }
 
+    useEffect(() => {
+        if (isSelected) {
+            wrapperRef.current?.scrollIntoView({block: "nearest"})
+        }
+    }, [isSelected])
+
 
     return (
-        <HStack onClick={handleToggleCharacter} css={{
-            bgColor: "white",
-            w: "full",
-            p: 2,
-            cursor: "pointer",
-            _hover: {
+        <HStack
+            ref={wrapperRef}
+            onClick={handleToggleCharacter}
+            css={{
+                bgColor: "white",
+                w: "full",
+                p: 2,
+                cursor: "pointer",
+                _hover: {
+                    bgColor: "gray.200"
+                },
+            }}
+            className={cx(isSelected && css({
                 bgColor: "gray.200"
-            },
-        }}>
+            }))}>
+
             <input type={"checkbox"}
                    checked={isCharacterSelected}
-                   onChange={handleToggleCharacter}/>
+            />
+
             <Image src={character.image} alt={character.name} width={40} height={40} className={css({
                 rounded: 10
             })}/>
+
             <VStack css={{
                 gap: 0,
                 alignItems: "start"
@@ -60,6 +77,7 @@ function AutoCompleteOption({character}: MultiSelectOptionProps) {
 
 interface MultiSelectOptionProps {
     character: CharacterType
+    isSelected?: boolean
 }
 
 

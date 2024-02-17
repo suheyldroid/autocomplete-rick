@@ -1,11 +1,24 @@
 "use client"
 import {Box, VStack} from "@styles/jsx";
-import {AutoCompleteOption} from "@/components/MultiSelect/AutoCompleteOption";
-import {useAutoCompleteContext} from "@/components/MultiSelect/AutoCompleteContext";
+import {AutoCompleteOption} from "@/components/AutoComplete/AutoCompleteOption";
+import {useAutoCompleteContext} from "@/components/AutoComplete/AutoCompleteContext";
 import {Typography} from "@/components/Typography";
 
 function AutoCompleteOptionList() {
-    const {options, isLoading, inputValue, showOptions} = useAutoCompleteContext()
+    const {
+        options,
+        isLoading,
+        inputValue,
+        showOptions,
+        activeIndex
+    } = useAutoCompleteContext()
+
+    const filteredOptions = options
+        .filter((option) =>
+            option.name
+                .toLowerCase()
+                .includes(inputValue.toLowerCase()))
+
     return (
         <Box css={{
             w: "full",
@@ -39,12 +52,14 @@ function AutoCompleteOptionList() {
                             </Typography>
                             :
                             <>
-                                {options
-                                    .filter((option) => option.name.toLowerCase().includes(inputValue.toLowerCase()))
-                                    .map((option) => (
-                                        <AutoCompleteOption key={option.id} character={option}/>
+                                {
+                                    filteredOptions.map((option, index) => (
+                                        <AutoCompleteOption
+                                            isSelected={index === activeIndex}
+                                            key={option.id}
+                                            character={option}/>
                                     ))}
-                                {options.length === 0 &&
+                                {filteredOptions.length === 0 &&
                                     <Typography css={{
                                         w: "full",
                                         bgColor: "white",

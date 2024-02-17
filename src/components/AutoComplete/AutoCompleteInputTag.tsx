@@ -2,13 +2,13 @@ import {HStack} from "@styles/jsx";
 import {Typography} from "@/components/Typography";
 import {Cross} from "@/assets/Cross";
 import {Button} from "@/components/Button";
-import {useAutoCompleteContext} from "@/components/MultiSelect/AutoCompleteContext";
+import {useAutoCompleteContext} from "@/components/AutoComplete/AutoCompleteContext";
 
 function AutoCompleteInputTag({character}: MultiSelectInputTagProps) {
-    const {handleDeselectValue} = useAutoCompleteContext()
+    const {handleDeselectItem} = useAutoCompleteContext()
 
     function onRemoveCharacter() {
-        handleDeselectValue(character.id)
+        handleDeselectItem(character.id)
     }
 
     return (
@@ -20,7 +20,7 @@ function AutoCompleteInputTag({character}: MultiSelectInputTagProps) {
         }}>
             <Typography css={{
                 maxW: {
-                    base:150,
+                    base: 150,
                     sm: 200,
                     md: 250,
                 },
@@ -31,7 +31,7 @@ function AutoCompleteInputTag({character}: MultiSelectInputTagProps) {
             }}>
                 {character.name}
             </Typography>
-            <Button onClick={onRemoveCharacter} css={{
+            <Button tabIndex={-1} onClick={onRemoveCharacter} css={{
                 bgColor: "gray.400",
                 rounded: 6,
                 p: 1,

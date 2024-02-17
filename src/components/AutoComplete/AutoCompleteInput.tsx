@@ -1,19 +1,19 @@
 import {HStack} from "@styles/jsx";
-import {AutoCompleteInputTag} from "@/components/MultiSelect/AutoCompleteInputTag";
+import {AutoCompleteInputTag} from "@/components/AutoComplete/AutoCompleteInputTag";
 import {Button} from "@/components/Button";
 import {ArrowDown} from "@/assets/ArrowDown";
-import {useAutoCompleteContext} from "@/components/MultiSelect/AutoCompleteContext";
+import {useAutoCompleteContext} from "@/components/AutoComplete/AutoCompleteContext";
 import {css} from "@styles/css";
 
 function AutoCompleteInput() {
-    const {selectedItems, inputValue, handleInputChange, handleShowOptions, showOptions} = useAutoCompleteContext()
+    const {selectedItems, inputValue, setInputValue, setShowOptions, showOptions} = useAutoCompleteContext()
 
     function toggleOptions() {
-        handleShowOptions(!showOptions)
+        setShowOptions(!showOptions)
     }
 
     function handleInputFocus() {
-        handleShowOptions(true)
+        setShowOptions(true)
     }
 
     return (
@@ -42,7 +42,7 @@ function AutoCompleteInput() {
                     })}
                            type="text"
                            value={inputValue}
-                           onChange={(event) => handleInputChange(event.target.value)}
+                           onChange={(event) => setInputValue(event.target.value)}
                            onFocus={handleInputFocus}
                     />
                     <Button p={2} onClick={toggleOptions}>
