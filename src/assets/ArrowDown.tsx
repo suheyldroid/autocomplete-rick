@@ -1,15 +1,19 @@
 import {SVGProps} from "react";
 
-function Cross(props: SVGProps<SVGSVGElement>) {
+function ArrowDown(props: SVGProps<SVGSVGElement>) {
     return (
-        <svg className="svg-icon"
-             width="1em"
-             height="1em"
-             viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" {...props} fill={"currentColor"}>
-            <path
-                d="M810.65984 170.65984q18.3296 0 30.49472 12.16512t12.16512 30.49472q0 18.00192-12.32896 30.33088l-268.67712 268.32896 268.67712 268.32896q12.32896 12.32896 12.32896 30.33088 0 18.3296-12.16512 30.49472t-30.49472 12.16512q-18.00192 0-30.33088-12.32896l-268.32896-268.67712-268.32896 268.67712q-12.32896 12.32896-30.33088 12.32896-18.3296 0-30.49472-12.16512t-12.16512-30.49472q0-18.00192 12.32896-30.33088l268.67712-268.32896-268.67712-268.32896q-12.32896-12.32896-12.32896-30.33088 0-18.3296 12.16512-30.49472t30.49472-12.16512q18.00192 0 30.33088 12.32896l268.32896 268.67712 268.32896-268.67712q12.32896-12.32896 30.33088-12.32896z"/>
+        <svg fill="#000000" width="12px" height="12px" viewBox="-2.4 -2.4 28.80 28.80"
+             xmlns="http://www.w3.org/2000/svg" stroke="#000000" strokeWidth="2.4"
+             transform="matrix(-1, 0, 0, 1, 0, 0)rotate(0)" {...props}>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC"
+               strokeWidth="0.336"></g>
+            <g id="SVGRepo_iconCarrier">
+                <path
+                    d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z"></path>
+            </g>
         </svg>
     )
 }
 
-export {Cross}
+export {ArrowDown}

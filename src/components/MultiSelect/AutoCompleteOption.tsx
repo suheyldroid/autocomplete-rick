@@ -4,17 +4,17 @@ import Image from "next/image";
 import {Typography} from "@/components/Typography";
 import {css} from "@styles/css";
 import {highlightText} from "@/helpers/highlightText";
-import {BaseItem, useAutoCompleteContext} from "@/components/MultiSelect/AutoCompleteContext";
+import {useAutoCompleteContext} from "@/components/MultiSelect/AutoCompleteContext";
 
-function MultiSelectOption({item}: MultiSelectOptionProps) {
+function AutoCompleteOption({character}: MultiSelectOptionProps) {
     const {selectedItems, handleSelectItem, handleDeselectValue, inputValue} = useAutoCompleteContext()
-    const isCharacterSelected = selectedItems.map(item => item.id).includes(item.id)
+    const isCharacterSelected = selectedItems.map(item => item.id).includes(character.id)
 
     function handleToggleCharacter() {
         if (isCharacterSelected) {
-            handleDeselectValue(item.id)
+            handleDeselectValue(character.id)
         } else {
-            handleSelectItem(item.id)
+            handleSelectItem(character.id)
         }
     }
 
@@ -28,13 +28,11 @@ function MultiSelectOption({item}: MultiSelectOptionProps) {
             _hover: {
                 bgColor: "gray.200"
             },
-        }} /*className={cx(isCharacterSelected && css({
-            bgColor: "gray.300"
-        }))}*/>
+        }}>
             <input type={"checkbox"}
                    checked={isCharacterSelected}
                    onChange={handleToggleCharacter}/>
-            <Image src={item.image} alt={item.name} width={40} height={40} className={css({
+            <Image src={character.image} alt={character.name} width={40} height={40} className={css({
                 rounded: 10
             })}/>
             <VStack css={{
@@ -46,23 +44,23 @@ function MultiSelectOption({item}: MultiSelectOptionProps) {
                     fontWeight: 600,
                     color: "gray.500"
                 }}>
-                    {highlightText(item.name, inputValue)}
+                    {highlightText(character.name, inputValue)}
                 </Typography>
                 <Typography css={{
                     fontSize: "sm",
                     color: "gray.400",
                     fontWeight: 600
                 }}>
-                    {item.episode.length} Episodes
+                    {character.episode.length} Episodes
                 </Typography>
             </VStack>
         </HStack>
     )
 }
 
-interface MultiSelectOptionProps<T extends BaseItem = any> {
-    item: T
+interface MultiSelectOptionProps {
+    character: CharacterType
 }
 
 
-export {MultiSelectOption}
+export {AutoCompleteOption}
